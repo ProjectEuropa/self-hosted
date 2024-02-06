@@ -107,6 +107,8 @@ services:
     environment:
       DOMAINS: '${APP_DOMAIN} -> http://web:9000'
       STAGE: '${APP_ENV}'
+    depends_on:
+      - web
   smtp:
     <<: *restart_policy
     platform: linux/amd64
