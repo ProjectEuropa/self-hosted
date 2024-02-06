@@ -105,7 +105,7 @@ services:
       - '80:80'
       - '443:443'
     environment:
-      DOMAINS: '${APP_DOMAIN} -> http://nginx:9000'
+      DOMAINS: '${APP_DOMAIN} -> http://web:9000'
       STAGE: '${APP_ENV}'
   smtp:
     <<: *restart_policy
@@ -409,20 +409,6 @@ services:
         BASE_IMAGE: sentry-self-hosted-local
     entrypoint: "/entrypoint.sh"
     command: '"0 0 * * * gosu sentry sentry cleanup --days $SENTRY_EVENT_RETENTION_DAYS"'
-  nginx:
-    <<: *restart_policy
-    ports:
-      - "$SENTRY_BIND:80/tcp"
-    image: "nginx:1.25.2-alpine"
-    volumes:
-      - type: bind
-        read_only: true
-        source: ./nginx
-        target: /etc/nginx
-      - sentry-nginx-cache:/var/cache/nginx
-    depends_on:
-      - web
-      - relay
   relay:
     <<: *restart_policy
     image: "$RELAY_IMAGE"
