@@ -105,7 +105,7 @@ services:
       - '80:80'
       - '443:443'
     environment:
-      DOMAINS: '${APP_DOMAIN} -> http://sentry:9000'
+      DOMAINS: '${APP_DOMAIN} -> http://web:9000'
       STAGE: '${APP_ENV}'
   smtp:
     <<: *restart_policy
